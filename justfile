@@ -1,5 +1,9 @@
 package := "old-ancient-axe"
 
+# initial install of dependencies (from pyproject.toml)
+install:
+  poetry install
+
 # launch streamlit app
 app:
   poetry run streamlit run streamlit_app.py
