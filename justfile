@@ -18,7 +18,7 @@ docs:
 
 # show documentation in browser
 show:
-  start docs/site/index.html
+  open docs/site/index.html
 
 # publish documentation to Github Pages
 pages:
