@@ -11,7 +11,6 @@ app:
 # black and isort
 lint:  
    black .
-   isort .
 
 # build documentation 
 docs:

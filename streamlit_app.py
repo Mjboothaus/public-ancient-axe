@@ -32,7 +32,7 @@ for name in wb.sheetnames:
     if sheet.tables.keys() is not None:
         named_tables.append([name, sheet.tables.keys()])
     else:
-        named_tables.append([name, 'No named tables in sheet'])
+        named_tables.append([name, "No named tables in sheet"])
 
 st.write(named_tables)
 
