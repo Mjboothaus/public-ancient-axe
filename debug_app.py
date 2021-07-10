@@ -4,6 +4,6 @@
 
 from streamlit import bootstrap
 
-app_script = 'streamlit_app.py'
+app_script = "streamlit_app.py"
 
-bootstrap.run(app_script, f'debug_app.py {app_script}', [], {})
+bootstrap.run(app_script, f"debug_app.py {app_script}", [], {})
