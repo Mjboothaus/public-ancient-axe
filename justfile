@@ -1,12 +1,16 @@
 package := "old-ancient-axe"
 
 # initial install of dependencies (from pyproject.toml)
-install:
+pinstall:
   poetry install
+
+# update of dependencies (from pyproject.toml)
+pupdate:
+  poetry update
 
 # launch streamlit app
 app:
-  poetry run streamlit run streamlit_app.py
+  poetry run streamlit run streamlit_app.py &
 
 # black and isort
 lint:  
@@ -27,3 +31,7 @@ pages:
 # create rst source for API documentation
 apidoc:
   sphinx-apidoc -o docs src/{{package}}
+
+# list running Streamlit processes
+ps:
+  ps -ef | grep "streamlit run" | grep -v sh
