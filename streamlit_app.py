@@ -33,7 +33,10 @@ def get_names_in_sheet(sheetname, wb):
     if wb is None:
         return []
     sheetid = wb.sheetnames.index(sheetname)
-    return wb.defined_names.localnames(sheetid)
+    tmp = [[defined_name.name, defined_name.value] for defined_name in wb.defined_names.localnames(sheetid)]
+    return tmp
+
+    #return wb.defined_names.localnames(sheetid)
 
 # Define sidebar class (for ease of tracking/grouping controls)
 class SideBar:
@@ -73,8 +76,9 @@ sheetnames = get_sheet_names(wb)
 sb.sheet_select = st.sidebar.radio('Worksheets:', sheetnames, 0)
 
 st.header(sb.sheet_select)
-st.write(extract_named_tables(sb.sheet_select, wb))
 st.write(get_names_in_sheet(sb.sheet_select, wb))
+st.write(extract_named_tables(sb.sheet_select, wb))
+
 
 
 # st.write(named_tables)

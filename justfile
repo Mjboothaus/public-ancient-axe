@@ -35,3 +35,6 @@ apidoc:
 # list running Streamlit processes
 ps:
   ps -ef | grep "streamlit run" | grep -v sh
+
+# Debug Streamlit app - see https://stackoverflow.com/questions/60172282/how-to-run-debug-a-streamlit-application-from-an-ide
+# Using the debug_app.py work-a-round for Streamlit debugging
