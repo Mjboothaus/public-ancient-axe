@@ -15,15 +15,25 @@ st.set_page_config(
 # Local functions
 
 def get_sheet_names(wb):
-    return [sheetname for sheetname in wb.sheetnames]
-
-def extract_named_tables(sheetname):
-    named_tables = []
-    sheet = wb[sheetname]
-    if sheet.tables.keys() is not None:
-        return sheet.tables.keys()
+    if wb is None:
+        return ['No Excel workbook is loaded']
     else:
-        return "No named tables in sheet"
+        return [sheetname for sheetname in wb.sheetnames]
+
+def extract_named_tables(sheetname, wb):
+    if wb is None:
+        return []
+    sheet = wb[sheetname]
+    #if sheet.tables.keys() is not None:
+    return sheet.tables.items()
+    #else:
+    #    return "No named tables in sheet"
+
+def get_names_in_sheet(sheetname, wb):
+    if wb is None:
+        return []
+    sheetid = wb.sheetnames.index(sheetname)
+    return wb.defined_names.localnames(sheetid)
 
 # Define sidebar class (for ease of tracking/grouping controls)
 class SideBar:
@@ -37,23 +47,34 @@ class SideBar:
 st.title("No Data in Excel - Prototype App")
 
 sb = SideBar()
+sheetnames = ['Please upload an Excel workbook']
 
 sb.uploaded_file = st.sidebar.file_uploader("Upload Files", type=["xlsx"])
 
+wb = None
+
 if sb.uploaded_file is not None:
-    st.write(sb.uploaded_file.name)
-    wb = load_workbook(filename=sb.uploaded_file)
+    try:
+        wb = load_workbook(filename=sb.uploaded_file)
+        st.write(sb.uploaded_file.name)
+    except:
+        st.info("No Excel file uploaded")
+   
+
 #    file_details = {
 #        "FileName": uploaded_file.name,
 #        "FileType": uploaded_file.type,
 #        "FileSize": uploaded_file.size,
 #    }
 #    st.write(file_details)
-    sheetnames = get_sheet_names(wb)
-    sb.sheet_select = st.sidebar.radio('Worksheets:', sheetnames, 0)
+
+sheetnames = get_sheet_names(wb)
+
+sb.sheet_select = st.sidebar.radio('Worksheets:', sheetnames, 0)
 
 st.header(sb.sheet_select)
-st.write(extract_named_tables(sb.sheet_select))
+st.write(extract_named_tables(sb.sheet_select, wb))
+st.write(get_names_in_sheet(sb.sheet_select, wb))
 
 
 # st.write(named_tables)
